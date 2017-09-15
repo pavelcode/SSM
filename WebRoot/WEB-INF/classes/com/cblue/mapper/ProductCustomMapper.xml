@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cblue.mapper.ProductCustomMapper" >
+
+     <sql id="query_productbyorder_where">
+            orders.id=orderdetail.orders_id AND product.id=orderdetail.product_id 
+            <if test="orders!=null">
+	            <if test="orders.id!=null">
+	               AND orders.id=#{orders.id};
+	            </if>
+            </if>
+     </sql>
+
+    <select id="findProductByOrderId" parameterType="com.cblue.entity.ProductQueryVo" resultType="com.cblue.entity.ProductCustom">
+      SELECT product.* FROM orders,orderdetail,product 
+          <where>
+              orders.id=orderdetail.orders_id AND product.id=orderdetail.product_id AND orders.id=#{orders.id};
+          </where>
+    </select>
+  
+</mapper>
